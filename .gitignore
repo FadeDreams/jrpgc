@@ -1,0 +1,35 @@
+# Compiled Object files, Static and Dynamic libraries (Shared Libraries)
+*.o
+*.a
+*.so
+
+# Folders
+_test/
+_vendor/
+.idea/
+.vscode/
+
+# Binary files
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+
+# Output files
+/dist/
+/build/
+
+# Dependency directories
+/vendor/
+
+# Go specific
+.idea/
+.vscode/
+/go.mod
+/go.sum
+/Godeps/
+/Godeps/_workspace/
+
+# End of file
+.vim
