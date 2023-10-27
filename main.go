@@ -18,7 +18,10 @@ func main() {
 	postRepository := repository.NewConcretePostRepository(db)
 	postUsecase := usecase.NewPostUsecase(postRepository)
 
+	authRepository := repository.NewConcreteAuthRepository(db)
+	authUsecase := usecase.NewAuthUsecase(authRepository)
+
 	port := ":8080"
-	s := apiserver.NewAPIService(port, db, postUsecase)
+	s := apiserver.NewAPIService(port, db, postUsecase, authUsecase)
 	s.Run()
 }
