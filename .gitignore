@@ -32,4 +32,4 @@ _vendor/
 /Godeps/_workspace/
 
 # End of file
-.vim
+*.vim
