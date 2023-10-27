@@ -5,7 +5,7 @@ import (
 	//"encoding/json"
 	"fmt"
 	"github.com/fadedreams/jrpgc/entity"
-	"github.com/golang-jwt/jwt"
+	//"github.com/golang-jwt/jwt"
 	"golang.org/x/crypto/bcrypt"
 	//"github.com/gorilla/mux"
 	//"golang.org/x/crypto/bcrypt"
@@ -13,14 +13,13 @@ import (
 	"gorm.io/gorm"
 	//"log"
 	//"net/http"
-	"time"
+	//"time"
 )
 
 type IAuthRepository interface {
 	SignUp(*entity.UserSignUp) (*entity.User, error)
 	SignIn(*entity.User) (*entity.User, error)
 	//isAuthorize() bool
-	GenerateJWT(string, string) (string, error)
 	Migrate() bool
 }
 
@@ -44,23 +43,6 @@ func (c *ConcreteAuthRepository) Migrate() bool {
 	}
 	return true
 	//s.db.AutoMigrate(&Post{})
-}
-
-func (c *ConcreteAuthRepository) GenerateJWT(email string, role string) (string, error) {
-	var mySigningKey = []byte("secret")
-	token := jwt.New(jwt.SigningMethodHS256)
-	claims := token.Claims.(jwt.MapClaims)
-	claims["authorized"] = true
-	claims["email"] = email
-	claims["role"] = role
-	claims["exp"] = time.Now().Add(time.Minute * 30).Unix()
-
-	tokenString, err := token.SignedString(mySigningKey)
-	if err != nil {
-		return "", err
-	}
-
-	return tokenString, nil
 }
 
 //func (c *ConcreteAuthRepository) isAuthorize() bool {
@@ -110,7 +92,7 @@ func (c *ConcreteAuthRepository) SignUp(userSignUp *entity.UserSignUp) (*entity.
 	newUser := &entity.User{
 		Email:    userSignUp.Email,
 		Password: userSignUp.Password,
-		// Set other user properties here
+		Role:     "user", // Set the role to 'user'
 	}
 
 	result = c.storage.db.Create(newUser)

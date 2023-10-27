@@ -5,9 +5,9 @@ import (
 
 	"github.com/fadedreams/jrpgc/entity"
 	"github.com/fadedreams/jrpgc/repository"
-	"github.com/golang-jwt/jwt"
+	//"github.com/golang-jwt/jwt"
 	//"gorm.io/gorm"
-	"time"
+	//"time"
 )
 
 type AuthUsecase struct {
@@ -28,23 +28,6 @@ func (u *AuthUsecase) Migrate() bool {
 
 func (u *AuthUsecase) TestPost() {
 	fmt.Println("test post")
-}
-
-func (u *AuthUsecase) GenerateJWT(email, role string) (string, error) {
-	var mySigningKey = []byte("secret")
-	token := jwt.New(jwt.SigningMethodHS256)
-	claims := token.Claims.(jwt.MapClaims)
-	claims["authorized"] = true
-	claims["email"] = email
-	claims["role"] = role
-	claims["exp"] = time.Now().Add(time.Minute * 30).Unix()
-
-	tokenString, err := token.SignedString(mySigningKey)
-	if err != nil {
-		return "", err
-	}
-
-	return tokenString, nil
 }
 
 func (u *AuthUsecase) SignUp(email, password string) (*entity.UserSignUp, error) {
